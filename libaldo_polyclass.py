@@ -298,5 +298,32 @@ class polyclass:
                     self.update(kres)
             return(kres)
         
+    def make_grp(self,ksym,op2='',side=0):
+        kres1=make_grp(self.q1,ksym)
+        kres2=make_grp(self.q2,ksym)
+        if side==1:
+            kres2= self.q2 
+        elif side==2:
+            kres1= self.q1
+        kres=ae.Equation(kres1,kres2)
+        if op2==1:
+            self.update(kres)
+        return(kres)
         
+    def make_grp_sec (self,kvec,op2='',side=0):
+        kresq=self
+        for i in kvec:
+            kres=kresq.make_grp(i,op2=op2,side=side)
+            kresq=polyclass(kres)
+            #print(kres)
+            #self.Q=ae.Equation(kres.q1,kres.q2)
+        if op2==1:
+             
+            self.Q=kresq.Q
+            self.q1=kresq.q1
+            self.q2=kresq.q2
+        return(kres)
+    
+    
+    
     
